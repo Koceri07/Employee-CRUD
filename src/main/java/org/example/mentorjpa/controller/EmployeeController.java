@@ -39,4 +39,9 @@ public class EmployeeController {
     public List<EmployeeDto> getEmployeesByName(@PathVariable String name){
         return employeeServise.getEmployeesByName(name);
     }
+
+    @PatchMapping("/{name}/{id}")
+    public void updateEmployeeNameById(@PathVariable String name,@PathVariable Long id){
+        employeeServise.updateEmployeeNameById(name, id);
+    }
 }

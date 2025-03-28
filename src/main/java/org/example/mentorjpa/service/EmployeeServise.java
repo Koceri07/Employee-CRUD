@@ -40,6 +40,12 @@ public class EmployeeServise {
                 .toList();
     }
 
+    public void updateEmployeeNameById(String name, Long id){
+        log.info("Action.updateEmployeeNameById.start for id {}", id);
+        employeeRepository.updateNameById(name, id);
+        log.info("Action.updateEmployeeNameById.end for id {}", id);
+    }
+
     public void deleteEmployeeById(Long id){employeeRepository.deleteById(id);}
 
     public List<EmployeeDto> getEmployeesByName(String name){

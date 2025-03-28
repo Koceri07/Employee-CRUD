@@ -22,6 +22,9 @@ public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> 
     @Query(value = "SELECT * FROM employee WHERE name = :name;", nativeQuery = true)
     List<EmployeeEntity> getEmployeesByName(@Param("name") String name);
 
+    @Query(value = "UPDATE employees SET name = :name WHERE id = :id;", nativeQuery = true)
+    void updateNameById(@Param("name") String name, @Param("id") Long id);
+
 
 
 }
