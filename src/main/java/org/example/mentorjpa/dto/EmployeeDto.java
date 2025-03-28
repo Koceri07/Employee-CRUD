@@ -11,5 +11,9 @@ public class EmployeeDto {
     private Long id;
     private String name;
     private String surname;
+    private String email;
+    private String fin;
+    private String brithdate;
     private int age;
+    private int phineNumber;
 }

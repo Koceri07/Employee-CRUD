@@ -20,7 +20,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> 
     void createEmployee(String name, String surname, String fin, int age, String birthdate, int phoneNumber, String email);
 
     @Query(value = "SELECT * FROM employee WHERE name = :name;", nativeQuery = true)
-    void getEmployeesByName(@Param("name") String name);
+    List<EmployeeEntity> getEmployeesByName(@Param("name") String name);
 
 
 
