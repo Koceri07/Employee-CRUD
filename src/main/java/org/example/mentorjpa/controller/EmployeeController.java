@@ -31,12 +31,12 @@ public class EmployeeController {
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployee(Long id){
+    public void deleteEmployee(@PathVariable Long id){
         employeeServise.deleteEmployeeById(id);
     }
 
-    @GetMapping("/{name}")
-    public List<EmployeeDto> getEmployeesByName(@PathVariable String name){
+    @GetMapping("/name")
+    public List<EmployeeDto> getEmployeesByName(@RequestParam String name){
         return employeeServise.getEmployeesByName(name);
     }
 

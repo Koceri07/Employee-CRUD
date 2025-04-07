@@ -12,19 +12,14 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
     List<EmployeeEntity> findAll();
 
-    //PutMapping
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO employees (name, surname, fin, age, brithdate, phone_number, email) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)", nativeQuery = true)
-    void createEmployee(String name, String surname, String fin, int age, String birthdate, int phoneNumber, String email);
-
-    @Query(value = "SELECT * FROM employee WHERE name = :name;", nativeQuery = true)
+    @Query(value = "SELECT * FROM employees WHERE name = :name;", nativeQuery = true)
     List<EmployeeEntity> getEmployeesByName(@Param("name") String name);
 
     @Query(value = "UPDATE employees SET name = :name WHERE id = :id;", nativeQuery = true)
     void updateNameById(@Param("name") String name, @Param("id") Long id);
 
+    @Query(value = "SELECT * FROM employees WHERE fin = :fin;", nativeQuery = true)
+    EmployeeEntity getEmployeeByFin(@Param("fin") int fin);
 
 
 }

@@ -19,7 +19,7 @@ public class EmployeeServise {
 
     public void createEmployee(EmployeeDto employeeDto){
         log.info("ActionLog.createEmployee.start for name {}", employeeDto.getName());
-        EmployeeEntity employeeEntity = EmployeeMapper.toEntity(employeeDto);
+        EmployeeEntity employeeEntity = EmployeeMapper.INSTANCE.toEntity(employeeDto);
         employeeRepository.save(employeeEntity);
         log.info("Action.createEmployee.end for name {}", employeeDto.getName());
     }
@@ -30,23 +30,33 @@ public class EmployeeServise {
                 .orElseThrow(() -> new NotFoundException("Employee Not Found"));
 
         log.info("Action.getEmployeeById.end for id {}", id);
-        return EmployeeMapper.toDto(employeeEntity);
+        return EmployeeMapper.INSTANCE.toDto(employeeEntity);
     }
 
     public List<EmployeeDto> getAllEmployees(){
         return employeeRepository.findAll()
                 .stream()
-                .map(EmployeeMapper::toDto)
+                .map(EmployeeMapper.INSTANCE::toDto)
                 .toList();
     }
 
     public void updateEmployeeNameById(String name, Long id){
         log.info("Action.updateEmployeeNameById.start for id {}", id);
-        employeeRepository.updateNameById(name, id);
-        log.info("Action.updateEmployeeNameById.end for id {}", id);
+        try {
+            employeeRepository.updateNameById(name, id);
+            log.info("Action.updateEmployeeNameById.end for id {}", id);
+        } catch (Exception e) {
+            throw new NotFoundException("Id not Found");
+        }
     }
 
-    public void deleteEmployeeById(Long id){employeeRepository.deleteById(id);}
+    public void deleteEmployeeById(Long id){
+        try {
+            employeeRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException("Id Not Found");
+        }
+    }
 
     public List<EmployeeDto> getEmployeesByName(String name){
         log.info("Action.getEmployeesByName.start for name {}", name);
@@ -54,7 +64,12 @@ public class EmployeeServise {
         log.info("Action.getEmployeesByName.end for name {}", name);
         return employeesEntityByName
                 .stream()
-                .map(EmployeeMapper::toDto)
+                .map(EmployeeMapper.INSTANCE::toDto)
                 .toList();
+    }
+    public EmployeeDto getEmployeeByFin(int fin){
+        log.info("Action.getEmployeeByFin.start for fin {}", fin);
+        EmployeeEntity employeeEntity = employeeRepository.getEmployeeByFin(fin);
+        return EmployeeMapper.INSTANCE.toDto(employeeEntity);
     }
 }
